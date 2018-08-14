@@ -5,6 +5,7 @@ namespace Oakma\SeoRules\Setup;
 use Magento\Framework\Setup\InstallSchemaInterface;
 use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\SchemaSetupInterface;
+
 /**
  * @codeCoverageIgnore
  */
@@ -144,17 +145,17 @@ class InstallSchema implements InstallSchemaInterface
             ['nullable' => false, 'default' => ''],
             'store_ids'
         )->addColumn(
-            'creation_time',
+            'created_time',
             \Magento\Framework\DB\Ddl\Table::TYPE_TIMESTAMP,
             null,
             ['nullable' => false, 'default' => \Magento\Framework\DB\Ddl\Table::TIMESTAMP_INIT],
-            'Block Creation Time'
+            'Creation Time'
         )->addColumn(
-            'update_time',
+            'updated_time',
             \Magento\Framework\DB\Ddl\Table::TYPE_TIMESTAMP,
             null,
             ['nullable' => false, 'default' => \Magento\Framework\DB\Ddl\Table::TIMESTAMP_INIT_UPDATE],
-            'Block Modification Time'
+            'Modification Time'
         )->addForeignKey(
             $installer->getFkName('oakma_seorule', 'entity', 'oakma_seorule_entity', 'id'),
             'entity',

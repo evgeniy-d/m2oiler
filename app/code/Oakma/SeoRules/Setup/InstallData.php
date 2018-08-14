@@ -1,6 +1,6 @@
 <?php
 
-namespace Magento\Cms\Setup;
+namespace Oakma\SeoRule\Setup;
 
 use Oakma\SeoRules\Model\Rule\Entity;
 use Oakma\SeoRules\Model\Rule\EntityFactory;
