@@ -10,8 +10,6 @@ use Oakma\SeoRules\Model\Rule\Entity;
  */
 class EntityRegistry
 {
-    const REGISTRY_SEPARATOR = ':';
-
     /**
      * @var EntityFactory
      */

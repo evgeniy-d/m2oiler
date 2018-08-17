@@ -1,33 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
--->
 <form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
-            <item name="provider" xsi:type="string">cms_page_form.page_form_data_source</item>
+            <item name="provider" xsi:type="string">seorules_form.seorules_form_data_source</item>
         </item>
-        <item name="label" xsi:type="string" translate="true">Page Information</item>
+        <item name="label" xsi:type="string" translate="true">Seo Rule Information</item>
         <item name="template" xsi:type="string">templates/form/collapsible</item>
     </argument>
     <settings>
         <buttons>
-            <button name="save_and_continue" class="Magento\Cms\Block\Adminhtml\Page\Edit\SaveAndContinueButton"/>
-            <button name="save" class="Magento\Cms\Block\Adminhtml\Page\Edit\SaveButton"/>
-            <button name="reset" class="Magento\Cms\Block\Adminhtml\Page\Edit\ResetButton"/>
-            <button name="delete" class="Magento\Cms\Block\Adminhtml\Page\Edit\DeleteButton"/>
-            <button name="back" class="Magento\Cms\Block\Adminhtml\Page\Edit\BackButton"/>
+            <button name="save_and_continue" class="Oakma\SeoRules\Block\Adminhtml\Page\Edit\SaveAndContinueButton"/>
+            <button name="save" class="Oakma\SeoRules\Block\Adminhtml\Page\Edit\SaveButton"/>
+            <button name="reset" class="Oakma\SeoRules\Block\Adminhtml\Page\Edit\ResetButton"/>
+            <button name="delete" class="Oakma\SeoRules\Block\Adminhtml\Page\Edit\DeleteButton"/>
+            <button name="back" class="Oakma\SeoRules\Block\Adminhtml\Page\Edit\BackButton"/>
         </buttons>
-        <namespace>cms_page_form</namespace>
+        <namespace>seorules_form</namespace>
         <dataScope>data</dataScope>
         <deps>
-            <dep>cms_page_form.page_form_data_source</dep>
+            <dep>seorules_form.seorules_form_data_source</dep>
         </deps>
     </settings>
-    <dataSource name="page_form_data_source">
+    <dataSource name="seorules_form_data_source">
         <argument name="data" xsi:type="array">
             <item name="js_config" xsi:type="array">
                 <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
@@ -36,10 +30,10 @@
         <settings>
             <submitUrl path="cms/page/save"/>
         </settings>
-        <dataProvider class="Magento\Cms\Model\Page\DataProvider" name="page_form_data_source">
+        <dataProvider class="Oakma\SeoRules\Model\Page\DataProvider" name="seorules_form_data_source">
             <settings>
-                <requestFieldName>page_id</requestFieldName>
-                <primaryFieldName>page_id</primaryFieldName>
+                <requestFieldName>rule_id</requestFieldName>
+                <primaryFieldName>id</primaryFieldName>
             </settings>
         </dataProvider>
     </dataSource>
@@ -215,7 +209,7 @@
             <formElements>
                 <multiselect>
                     <settings>
-                        <options class="Magento\Cms\Ui\Component\Listing\Column\Cms\Options"/>
+                        <options class="Oakma\SeoRules\Ui\Component\Listing\Column\Cms\Options"/>
                     </settings>
                 </multiselect>
             </formElements>
@@ -240,7 +234,7 @@
             <formElements>
                 <select>
                     <settings>
-                        <options class="Magento\Cms\Model\Page\Source\PageLayout"/>
+                        <options class="Oakma\SeoRules\Model\Page\Source\PageLayout"/>
                     </settings>
                 </select>
             </formElements>
@@ -307,7 +301,7 @@
             <formElements>
                 <select>
                     <settings>
-                        <options class="Magento\Cms\Model\Page\Source\Theme"/>
+                        <options class="Oakma\SeoRules\Model\Page\Source\Theme"/>
                         <caption translate="true">-- Please Select --</caption>
                     </settings>
                 </select>
@@ -327,7 +321,7 @@
             <formElements>
                 <select>
                     <settings>
-                        <options class="Magento\Cms\Model\Page\Source\PageLayout"/>
+                        <options class="Oakma\SeoRules\Model\Page\Source\PageLayout"/>
                         <caption translate="true">-- Please Select --</caption>
                     </settings>
                 </select>
