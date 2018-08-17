@@ -1,10 +1,6 @@
 <?php
-/**
- *
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
-namespace Magento\Cms\Controller\Adminhtml\Page;
+
+namespace Oakma\SeoRules\Controller\Adminhtml\Rule;
 
 class NewAction extends \Magento\Backend\App\Action
 {
@@ -13,7 +9,7 @@ class NewAction extends \Magento\Backend\App\Action
      *
      * @see _isAllowed()
      */
-    const ADMIN_RESOURCE = 'Magento_Cms::save';
+    const ADMIN_RESOURCE = 'Oakma_SeoRule::rule_save';
 
     /**
      * @var \Magento\Backend\Model\View\Result\Forward

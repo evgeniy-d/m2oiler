@@ -1,6 +1,6 @@
 <?php
 
-namespace Oakma\SeoRule\Controller\Adminhtml\Rule;
+namespace Oakma\SeoRules\Controller\Adminhtml\Rule;
 
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\View\Result\PageFactory;

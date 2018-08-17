@@ -1,5 +1,5 @@
 {
-  "name": "oakma/module-seorules",
+  "name": "oakma/module-seoruless",
   "description": "Seo rules in one place for different types of pages",
   "require": {
     "php": "~7.*"

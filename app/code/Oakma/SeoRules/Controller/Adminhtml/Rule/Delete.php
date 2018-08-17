@@ -1,10 +1,7 @@
 <?php
-/**
- *
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
-namespace Magento\Cms\Controller\Adminhtml\Page;
+namespace Oakma\SeoRules\Controller\Adminhtml\Rule;
+
+use Magento\Backend\App\Action;
 
 class Delete extends \Magento\Backend\App\Action
 {
@@ -13,49 +10,53 @@ class Delete extends \Magento\Backend\App\Action
      *
      * @see _isAllowed()
      */
-    const ADMIN_RESOURCE = 'Magento_Cms::page_delete';
+    const ADMIN_RESOURCE = 'Oakma_SeoRule::rule_delete';
 
-    /**
+	/**
+	 * Rule repository
+	 *
+	 * @var \Oakma\SeoRules\Api\RuleRepository
+	 */
+    protected $ruleRepository;
+
+	/**
+	 * Delete constructor.
+	 *
+	 * @param Action\Context $context
+	 * @param \Oakma\SeoRules\Api\RuleRepository $ruleRepository
+	 */
+    public function __construct(
+    	Action\Context $context,
+		\Oakma\SeoRules\Api\RuleRepositoryInterface $ruleRepository
+    ) {
+	    parent::__construct($context);
+    	$this->ruleRepository = $ruleRepository;
+    }
+
+	/**
      * Delete action
      *
      * @return \Magento\Backend\Model\View\Result\Redirect
      */
     public function execute()
     {
-        // check if we know what should be deleted
-        $id = $this->getRequest()->getParam('page_id');
-        /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
+        $id = $this->getRequest()->getParam('rule_id');
         $resultRedirect = $this->resultRedirectFactory->create();
+
         if ($id) {
-            $title = "";
             try {
-                // init model and delete
-                $model = $this->_objectManager->create(\Magento\Cms\Model\Page::class);
-                $model->load($id);
-                $title = $model->getTitle();
-                $model->delete();
-                // display success message
-                $this->messageManager->addSuccess(__('The page has been deleted.'));
-                // go to grid
-                $this->_eventManager->dispatch(
-                    'adminhtml_cmspage_on_delete',
-                    ['title' => $title, 'status' => 'success']
-                );
+	            $model = $this->ruleRepository->getById($id);
+	            $this->ruleRepository->delete($model);
+                $this->messageManager->addSuccess(__('The rule has been deleted.'));
                 return $resultRedirect->setPath('*/*/');
             } catch (\Exception $e) {
-                $this->_eventManager->dispatch(
-                    'adminhtml_cmspage_on_delete',
-                    ['title' => $title, 'status' => 'fail']
-                );
-                // display error message
                 $this->messageManager->addError($e->getMessage());
-                // go back to edit form
                 return $resultRedirect->setPath('*/*/edit', ['page_id' => $id]);
             }
         }
-        // display error message
-        $this->messageManager->addError(__('We can\'t find a page to delete.'));
-        // go to grid
+
+        $this->messageManager->addError(__('We can\'t find a seo rule to delete.'));
+
         return $resultRedirect->setPath('*/*/');
     }
 }

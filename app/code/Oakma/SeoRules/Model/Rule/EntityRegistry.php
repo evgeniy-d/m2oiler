@@ -1,12 +1,12 @@
 <?php
 
-namespace Oakma\SeoRule\Model\Rule;
+namespace Oakma\SeoRules\Model\Rule;
 
-use Oakma\SeoRule\Model\Rule\EntityFactory;
-use Oakma\SeoRule\Model\Rule\Entity;
+use Oakma\SeoRules\Model\Rule\EntityFactory;
+use Oakma\SeoRules\Model\Rule\Entity;
 
 /**
- * Registry for \Oakma\SeoRule\Model\Rule\Entity
+ * Registry for \Oakma\SeoRules\Model\Rule\Entity
  */
 class EntityRegistry
 {
@@ -25,7 +25,7 @@ class EntityRegistry
 	/**
 	 * EntityRegistry constructor.
 	 *
-	 * @param \Oakma\SeoRule\Model\Rule\EntityFactory $entityFactory
+	 * @param \Oakma\SeoRules\Model\Rule\EntityFactory $entityFactory
 	 */
     public function __construct(
 	    EntityFactory $entityFactory

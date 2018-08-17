@@ -1,6 +1,6 @@
 <?php
 
-namespace Oakma\SeoRule\Setup;
+namespace Oakma\SeoRules\Setup;
 
 use Oakma\SeoRules\Model\Rule\Entity;
 use Oakma\SeoRules\Model\Rule\EntityFactory;

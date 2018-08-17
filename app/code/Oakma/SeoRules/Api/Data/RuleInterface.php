@@ -1,5 +1,5 @@
 <?php
-namespace Oakma\SeoRule\Api\Data;
+namespace Oakma\SeoRules\Api\Data;
 
 /**
  * Seo rule interface.
@@ -60,7 +60,7 @@ interface RuleInterface
     public function getSeoText();
 
     /**
-     * @return \Oakma\SeoRule\Model\Rule
+     * @return \Oakma\SeoRules\Model\Rule
      */
     public function getParentRule();
 }

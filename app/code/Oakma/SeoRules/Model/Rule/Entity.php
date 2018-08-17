@@ -1,12 +1,12 @@
 <?php
-namespace Oakma\SeoRule\Model\Rule;
+namespace Oakma\SeoRules\Model\Rule;
 
 use \Magento\Framework\Model\AbstractModel;
 
 /**
  * Class Entity
  *
- * @package Oakma\SeoRule\Model\Rule
+ * @package Oakma\SeoRules\Model\Rule
  */
 class Entity extends AbstractModel
 {
@@ -15,13 +15,13 @@ class Entity extends AbstractModel
 	 *
 	 * @var string
 	 */
-	protected $_eventPrefix = 'oakma_seorule_rule_entity';
+	protected $_eventPrefix = 'oakma_seorules_rule_entity';
 
 	/**
 	 * Constructor of model
 	 */
 	protected function _construct()
 	{
-		$this->_init('Oakma\SeoRule\Model\ResourceModel\Rule\Entity');
+		$this->_init('Oakma\SeoRules\Model\ResourceModel\Rule\Entity');
 	}
 }

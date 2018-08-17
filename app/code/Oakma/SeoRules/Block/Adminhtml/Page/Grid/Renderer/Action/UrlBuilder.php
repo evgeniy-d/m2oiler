@@ -1,9 +1,6 @@
 <?php
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
-namespace Magento\Cms\Block\Adminhtml\Page\Grid\Renderer\Action;
+
+namespace Oakma\SeoRules\Block\Adminhtml\Rule\Grid\Renderer\Action;
 
 use Magento\Store\Api\StoreResolverInterface;
 

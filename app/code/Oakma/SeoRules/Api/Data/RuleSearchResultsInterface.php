@@ -1,6 +1,6 @@
 <?php
 
-namespace Oakma\SeoRule\Api\Data;
+namespace Oakma\SeoRules\Api\Data;
 
 use Magento\Framework\Api\SearchResultsInterface;
 
@@ -13,14 +13,14 @@ interface PageSearchResultsInterface extends SearchResultsInterface
     /**
      * Get rules list.
      *
-     * @return \Oakma\SeoRule\Api\Data\RuleInterface[]
+     * @return \Oakma\SeoRules\Api\Data\RuleInterface[]
      */
     public function getItems();
 
     /**
      * Set rules list.
      *
-     * @param \Oakma\SeoRule\Api\Data\RuleInterface[] $items
+     * @param \Oakma\SeoRules\Api\Data\RuleInterface[] $items
      * @return $this
      */
     public function setItems(array $items);

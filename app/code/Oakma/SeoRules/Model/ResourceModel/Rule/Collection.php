@@ -1,11 +1,11 @@
 <?php
-namespace Oakma\SeoRule\Model\ResourceModel\Rule;
+namespace Oakma\SeoRules\Model\ResourceModel\Rule;
 
 use \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
 
 /**
  * Class Collection
- * @package Oakma\SeoRule\Model\ResourceModel\Rule
+ * @package Oakma\SeoRules\Model\ResourceModel\Rule
  */
 class Collection extends AbstractCollection
 {
@@ -21,7 +21,7 @@ class Collection extends AbstractCollection
 	 *
 	 * @var string
 	 */
-	protected $_eventPrefix = 'oakma_seorule_rule_collection';
+	protected $_eventPrefix = 'oakma_seorules_rule_collection';
 
 	/**
 	 * Event object
@@ -37,7 +37,7 @@ class Collection extends AbstractCollection
 	 */
 	protected function _construct()
 	{
-		$this->_init('Oakma\SeoRule\Model\Rule', 'Oakma\SeoRule\Model\ResourceModel\Rule');
+		$this->_init('Oakma\SeoRules\Model\Rule', 'Oakma\SeoRules\Model\ResourceModel\Rule');
 	}
 
 }

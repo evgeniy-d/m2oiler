@@ -1,19 +1,19 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <preference for="Oakma\SeoRule\Api\Data\RuleSearchResultsInterface" type="Magento\Framework\Api\SearchResults" />
-    <preference for="Oakma\SeoRule\Api\Data\RuleInterface" type="Oakma\SeoRule\Model\Rule" />
-    <preference for="Oakma\SeoRule\Api\RuleRepositoryInterface" type="Oakma\SeoRule\Model\RuleRepository" />
-    <preference for="Oakma\SeoRule\Api\RuleManagementInterface" type="Oakma\SeoRule\Model\RuleManagement" />
+    <preference for="Oakma\SeoRules\Api\Data\RuleSearchResultsInterface" type="Magento\Framework\Api\SearchResults" />
+    <preference for="Oakma\SeoRules\Api\Data\RuleInterface" type="Oakma\SeoRules\Model\Rule" />
+    <preference for="Oakma\SeoRules\Api\RuleRepositoryInterface" type="Oakma\SeoRules\Model\RuleRepository" />
+    <preference for="Oakma\SeoRules\Api\RuleManagementInterface" type="Oakma\SeoRules\Model\RuleManagement" />
 
     <type name="Magento\Framework\Model\Entity\RepositoryFactory">
         <arguments>
             <argument name="entities" xsi:type="array">
-                <item name="Oakma\SeoRule\Api\Data\PageInterface" xsi:type="string">Oakma\SeoRule\Api\RuleRepositoryInterface</item>
+                <item name="Oakma\SeoRules\Api\Data\PageInterface" xsi:type="string">Oakma\SeoRules\Api\RuleRepositoryInterface</item>
             </argument>
         </arguments>
     </type>
 
-    <virtualType name="Oakma\SeoRule\Model\Api\SearchCriteria\PageCollectionProcessor" type="Magento\Framework\Api\SearchCriteria\CollectionProcessor">
+    <virtualType name="Oakma\SeoRules\Model\Api\SearchCriteria\PageCollectionProcessor" type="Magento\Framework\Api\SearchCriteria\CollectionProcessor">
         <arguments>
             <argument name="processors" xsi:type="array">
                 <item name="filters" xsi:type="object">Magento\Framework\Api\SearchCriteria\CollectionProcessor\FilterProcessor</item>
@@ -23,9 +23,17 @@
         </arguments>
     </virtualType>
 
-    <type name="Oakma\SeoRule\Model\PageRepository">
+    <type name="Oakma\SeoRules\Model\PageRepository">
         <arguments>
-            <argument name="collectionProcessor" xsi:type="object">Oakma\SeoRule\Model\Api\SearchCriteria\PageCollectionProcessor</argument>
+            <argument name="collectionProcessor" xsi:type="object">Oakma\SeoRules\Model\Api\SearchCriteria\PageCollectionProcessor</argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="seorules_listing_data_source" xsi:type="string">Oakma\SeoRules\Model\ResourceModel\Rule\Grid\Collection</item>
+            </argument>
         </arguments>
     </type>
 </config>

@@ -1,5 +1,5 @@
 <?php
-namespace Oakma\SeoRule\Api;
+namespace Oakma\SeoRules\Api;
 
 use Magento\Framework\Api\SearchCriteriaInterface;
 
@@ -12,20 +12,20 @@ interface RuleRepositoryInterface
     /**
      * Save rule.
      *
-     * @param \Oakma\SeoRule\Api\Data\RuleInterface $rule
+     * @param \Oakma\SeoRules\Api\Data\RuleInterface $rule
      *
-     * @return \Oakma\SeoRule\Api\Data\RuleInterface
+     * @return \Oakma\SeoRules\Api\Data\RuleInterface
      *
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function save(\Oakma\SeoRule\Api\Data\RuleInterface $rule);
+    public function save(\Oakma\SeoRules\Api\Data\RuleInterface $rule);
 
     /**
      * Retrieve rule.
      *
      * @param int $pageId
      *
-     * @return \Oakma\SeoRule\Api\Data\RuleInterface
+     * @return \Oakma\SeoRules\Api\Data\RuleInterface
      *
      * @throws \Magento\Framework\Exception\LocalizedException
      */
@@ -44,13 +44,13 @@ interface RuleRepositoryInterface
     /**
      * Delete rule.
      *
-     * @param \Oakma\SeoRule\Api\Data\RuleInterface $rule
+     * @param \Oakma\SeoRules\Api\Data\RuleInterface $rule
      *
      * @return bool true on success
      *
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function delete(\Oakma\SeoRule\Api\Data\RuleInterface $rule);
+    public function delete(\Oakma\SeoRules\Api\Data\RuleInterface $rule);
 
     /**
      * Delete rule by ID.

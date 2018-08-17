@@ -1,11 +1,11 @@
 <?php
-namespace Oakma\SeoRule\Model\ResourceModel;
+namespace Oakma\SeoRules\Model\ResourceModel;
 
 use \Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 
 /**
  * Class Rule
- * @package Oakma\SeoRule\Model\ResourceModel
+ * @package Oakma\SeoRules\Model\ResourceModel
  */
 class Rule extends AbstractDb
 {
@@ -26,6 +26,6 @@ class Rule extends AbstractDb
 	 */
 	protected function _construct()
 	{
-		$this->_init('oakma_seorule', 'id');
+		$this->_init('oakma_seorules', 'id');
 	}
 }

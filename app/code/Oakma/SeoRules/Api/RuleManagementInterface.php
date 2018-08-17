@@ -1,5 +1,5 @@
 <?php
-namespace Oakma\SeoRule\Api;
+namespace Oakma\SeoRules\Api;
 
 /**
  * Seo rule interface.

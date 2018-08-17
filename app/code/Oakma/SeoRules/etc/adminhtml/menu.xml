@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
     <menu>
-        <add id="Oakma_SeoRule::rule" title="Seo Rules" translate="title" module="Oakma_SeoRule" sortOrder="110" parent="Magento_Backend::content_elements" action="seorule/rule" resource="Oakma_SeoRule::rule"/>
+        <add id="Oakma_SeoRule::rule" title="Seo Rules" translate="title" module="Oakma_SeoRule" sortOrder="110" parent="Magento_Backend::content_elements" action="seorules/rule" resource="Oakma_SeoRule::rule"/>
     </menu>
 </config>

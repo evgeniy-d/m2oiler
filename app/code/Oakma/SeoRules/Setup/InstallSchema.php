@@ -22,10 +22,10 @@ class InstallSchema implements InstallSchemaInterface
         $installer->startSetup();
 
         /**
-         * Create table 'oakma_seorule_entity'
+         * Create table 'oakma_seorules_entity'
          */
         $table = $installer->getConnection()->newTable(
-            $installer->getTable('oakma_seorule_entity')
+            $installer->getTable('oakma_seorules_entity')
         )->addColumn(
             'id',
             \Magento\Framework\DB\Ddl\Table::TYPE_SMALLINT,
@@ -50,10 +50,10 @@ class InstallSchema implements InstallSchemaInterface
         $installer->getConnection()->createTable($table);
 
         /**
-         * Create table 'oakma_seorule'
+         * Create table 'oakma_seorules'
          */
         $table = $installer->getConnection()->newTable(
-            $installer->getTable('oakma_seorule')
+            $installer->getTable('oakma_seorules')
         )->addColumn(
             'id',
             \Magento\Framework\DB\Ddl\Table::TYPE_SMALLINT,
@@ -157,9 +157,9 @@ class InstallSchema implements InstallSchemaInterface
             ['nullable' => false, 'default' => \Magento\Framework\DB\Ddl\Table::TIMESTAMP_INIT_UPDATE],
             'Modification Time'
         )->addForeignKey(
-            $installer->getFkName('oakma_seorule', 'entity', 'oakma_seorule_entity', 'id'),
+            $installer->getFkName('oakma_seorules', 'entity', 'oakma_seorules_entity', 'id'),
             'entity',
-            $installer->getTable('oakma_seorule_enitity'),
+            $installer->getTable('oakma_seorules_enitity'),
             'id',
             \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
         );

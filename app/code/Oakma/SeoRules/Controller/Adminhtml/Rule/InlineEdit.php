@@ -1,14 +1,9 @@
 <?php
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
-namespace Magento\Cms\Controller\Adminhtml\Page;
+
+namespace Oakma\SeoRules\Controller\Adminhtml\Rule;
 
 use Magento\Backend\App\Action\Context;
-use Magento\Cms\Api\PageRepositoryInterface as PageRepository;
 use Magento\Framework\Controller\Result\JsonFactory;
-use Magento\Cms\Api\Data\PageInterface;
 
 /**
  * Cms page grid inline edit controller
@@ -20,17 +15,17 @@ class InlineEdit extends \Magento\Backend\App\Action
     /**
      * Authorization level of a basic admin session
      */
-    const ADMIN_RESOURCE = 'Magento_Cms::save';
+    const ADMIN_RESOURCE = 'Oakma_SeoRule::rule_save';
 
     /**
-     * @var \Magento\Cms\Controller\Adminhtml\Page\PostDataProcessor
+     * @var \Oakma\SeoRules\Controller\Adminhtml\Rule\PostDataProcessor
      */
     protected $dataProcessor;
 
     /**
-     * @var \Magento\Cms\Api\PageRepositoryInterface
+     * @var \Oakma\SeoRules\Api\RuleRepositoryInterface
      */
-    protected $pageRepository;
+    protected $ruleRepository;
 
     /**
      * @var \Magento\Framework\Controller\Result\JsonFactory
@@ -39,19 +34,19 @@ class InlineEdit extends \Magento\Backend\App\Action
 
     /**
      * @param Context $context
-     * @param PostDataProcessor $dataProcessor
-     * @param PageRepository $pageRepository
+     * @param \Oakma\SeoRules\Controller\Adminhtml\Rule\PostDataProcessor $dataProcessor
+     * @param \Oakma\SeoRules\Api\RuleRepositoryInterface $ruleRepository
      * @param JsonFactory $jsonFactory
      */
     public function __construct(
         Context $context,
-        PostDataProcessor $dataProcessor,
-        PageRepository $pageRepository,
+        \Oakma\SeoRules\Controller\Adminhtml\Rule\PostDataProcessor $dataProcessor,
+        \Oakma\SeoRules\Api\RuleRepositoryInterface $ruleRepository,
         JsonFactory $jsonFactory
     ) {
         parent::__construct($context);
         $this->dataProcessor = $dataProcessor;
-        $this->pageRepository = $pageRepository;
+        $this->ruleRepository = $ruleRepository;
         $this->jsonFactory = $jsonFactory;
     }
 
@@ -73,25 +68,29 @@ class InlineEdit extends \Magento\Backend\App\Action
             ]);
         }
 
-        foreach (array_keys($postItems) as $pageId) {
-            /** @var \Magento\Cms\Model\Page $page */
-            $page = $this->pageRepository->getById($pageId);
+        foreach (array_keys($postItems) as $ruleId) {
+            $rule = $this->ruleRepository->getById($ruleId);
+
             try {
-                $pageData = $this->filterPost($postItems[$pageId]);
-                $this->validatePost($pageData, $page, $error, $messages);
-                $extendedPageData = $page->getData();
-                $this->setCmsPageData($page, $extendedPageData, $pageData);
-                $this->pageRepository->save($page);
+                $ruleData = $this->filterPost($postItems[$ruleId]);
+
+                $this->validatePost($ruleData, $rule, $error, $messages);
+
+	            $extendedRuleData = $rule->getData();
+
+                $this->setRuleData($rule, $extendedRuleData, $ruleData);
+
+                $this->ruleRepository->save($rule);
             } catch (\Magento\Framework\Exception\LocalizedException $e) {
-                $messages[] = $this->getErrorWithPageId($page, $e->getMessage());
+                $messages[] = $this->getErrorWithRuleId($rule, $e->getMessage());
                 $error = true;
             } catch (\RuntimeException $e) {
-                $messages[] = $this->getErrorWithPageId($page, $e->getMessage());
+                $messages[] = $this->getErrorWithRuleId($rule, $e->getMessage());
                 $error = true;
             } catch (\Exception $e) {
-                $messages[] = $this->getErrorWithPageId(
+                $messages[] = $this->getErrorWithRuleId(
                     $page,
-                    __('Something went wrong while saving the page.')
+                    __('Something went wrong while saving the seo rule.')
                 );
                 $error = true;
             }
@@ -111,56 +110,63 @@ class InlineEdit extends \Magento\Backend\App\Action
      */
     protected function filterPost($postData = [])
     {
-        $pageData = $this->dataProcessor->filter($postData);
-        $pageData['custom_theme'] = isset($pageData['custom_theme']) ? $pageData['custom_theme'] : null;
-        $pageData['custom_root_template'] = isset($pageData['custom_root_template'])
-            ? $pageData['custom_root_template']
-            : null;
-        return $pageData;
+        $ruleData = $this->dataProcessor->filter($postData);
+        return $ruleData;
     }
 
     /**
      * Validate post data
      *
-     * @param array $pageData
-     * @param \Magento\Cms\Model\Page $page
+     * @param array $ruleData
+     * @param \Oakma\SeoRules\Api\Data\RuleInterface $rule
      * @param bool $error
      * @param array $messages
      * @return void
      */
-    protected function validatePost(array $pageData, \Magento\Cms\Model\Page $page, &$error, array &$messages)
-    {
-        if (!($this->dataProcessor->validate($pageData) && $this->dataProcessor->validateRequireEntry($pageData))) {
+    protected function validatePost(
+    	array $ruleData,
+	    \Oakma\SeoRules\Api\Data\RuleInterface $rule,
+	    &$error,
+	    array &$messages
+    ) {
+        if (!($this->dataProcessor->validate($ruleData) && $this->dataProcessor->validateRequireEntry($ruleData))) {
             $error = true;
             foreach ($this->messageManager->getMessages(true)->getItems() as $error) {
-                $messages[] = $this->getErrorWithPageId($page, $error->getText());
+                $messages[] = $this->getErrorWithRuleId($rule, $error->getText());
             }
         }
     }
 
     /**
-     * Add page title to error message
+     * Add rule id to error message
      *
-     * @param PageInterface $page
+     * @param \Oakma\SeoRules\Api\Data\RuleInterface $rule
      * @param string $errorText
+     *
      * @return string
      */
-    protected function getErrorWithPageId(PageInterface $page, $errorText)
-    {
-        return '[Page ID: ' . $page->getId() . '] ' . $errorText;
+    protected function getErrorWithRuleId(
+	    \Oakma\SeoRules\Api\Data\RuleInterface $rule,
+	    string $errorText
+    ) {
+        return '[Rule ID: ' . $rule->getId() . '] ' . $errorText;
     }
 
     /**
-     * Set cms page data
+     * Set seo rule data
      *
-     * @param \Magento\Cms\Model\Page $page
-     * @param array $extendedPageData
-     * @param array $pageData
+     * @param \Oakma\SeoRules\Api\Data\RuleInterface $rule
+     * @param array $extendedRuleData
+     * @param array $ruleData
      * @return $this
      */
-    public function setCmsPageData(\Magento\Cms\Model\Page $page, array $extendedPageData, array $pageData)
-    {
-        $page->setData(array_merge($page->getData(), $extendedPageData, $pageData));
+    public function setCmsPageData(
+	    \Oakma\SeoRules\Api\Data\RuleInterface $rule,
+	    array $extendedRuleData,
+	    array $ruleData
+    ) {
+	    $rule->setData(array_merge($rule->getData(), $extendedRuleData, $ruleData));
+
         return $this;
     }
 }

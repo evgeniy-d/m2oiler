@@ -1,13 +1,8 @@
 <?php
-/**
- *
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
-namespace Magento\Cms\Controller\Adminhtml\Page;
+
+namespace Oakma\SeoRules\Controller\Adminhtml\Rule;
 
 use Magento\Backend\App\Action;
-use Magento\Cms\Model\Page;
 use Magento\Framework\App\Request\DataPersistorInterface;
 use Magento\Framework\Exception\LocalizedException;
 
@@ -18,7 +13,7 @@ class Save extends \Magento\Backend\App\Action
      *
      * @see _isAllowed()
      */
-    const ADMIN_RESOURCE = 'Magento_Cms::save';
+    const ADMIN_RESOURCE = 'Oakma_SeoRule::rule_save';
 
     /**
      * @var PostDataProcessor
@@ -31,36 +26,34 @@ class Save extends \Magento\Backend\App\Action
     protected $dataPersistor;
 
     /**
-     * @var \Magento\Cms\Model\PageFactory
+     * @var \Magento\Cms\Model\RuleFactory
      */
-    private $pageFactory;
+    private $ruleFactory;
 
     /**
-     * @var \Magento\Cms\Api\PageRepositoryInterface
+     * @var \Oakma\SeoRules\Api\RuleRepositoryInterface
      */
-    private $pageRepository;
+    private $ruleRepository;
 
     /**
      * @param Action\Context $context
      * @param PostDataProcessor $dataProcessor
      * @param DataPersistorInterface $dataPersistor
-     * @param \Magento\Cms\Model\PageFactory $pageFactory
-     * @param \Magento\Cms\Api\PageRepositoryInterface $pageRepository
+     * @param \Oakma\SeoRules\Model\RuleFactory $ruleFactory
+     * @param \Oakma\SeoRules\Api\RuleRepositoryInterface $ruleRepository
      */
     public function __construct(
         Action\Context $context,
         PostDataProcessor $dataProcessor,
         DataPersistorInterface $dataPersistor,
-        \Magento\Cms\Model\PageFactory $pageFactory = null,
-        \Magento\Cms\Api\PageRepositoryInterface $pageRepository = null
+        \Oakma\SeoRules\Model\RuleFactory $ruleFactory,
+        \Oakma\SeoRules\Api\RuleRepositoryInterface $ruleRepository
     ) {
         $this->dataProcessor = $dataProcessor;
         $this->dataPersistor = $dataPersistor;
-        $this->pageFactory = $pageFactory
-            ?: \Magento\Framework\App\ObjectManager::getInstance()->get(\Magento\Cms\Model\PageFactory::class);
-        $this->pageRepository = $pageRepository
-            ?: \Magento\Framework\App\ObjectManager::getInstance()
-                ->get(\Magento\Cms\Api\PageRepositoryInterface::class);
+        $this->ruleFactory = $ruleFactory;
+        $this->ruleRepository = $ruleRepository;
+
         parent::__construct($context);
     }
 
@@ -73,26 +66,19 @@ class Save extends \Magento\Backend\App\Action
     public function execute()
     {
         $data = $this->getRequest()->getPostValue();
-        /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
+
         if ($data) {
             $data = $this->dataProcessor->filter($data);
-            if (isset($data['is_active']) && $data['is_active'] === 'true') {
-                $data['is_active'] = Page::STATUS_ENABLED;
-            }
-            if (empty($data['page_id'])) {
-                $data['page_id'] = null;
-            }
 
-            /** @var \Magento\Cms\Model\Page $model */
-            $model = $this->pageFactory->create();
+            $model = $this->ruleFactory->create();
 
-            $id = $this->getRequest()->getParam('page_id');
+            $id = $this->getRequest()->getParam('rule_id');
             if ($id) {
                 try {
-                    $model = $this->pageRepository->getById($id);
+                    $model = $this->ruleRepository->getById($id);
                 } catch (LocalizedException $e) {
-                    $this->messageManager->addErrorMessage(__('This page no longer exists.'));
+                    $this->messageManager->addErrorMessage(__('This rule no longer exists.'));
                     return $resultRedirect->setPath('*/*/');
                 }
             }
@@ -100,31 +86,33 @@ class Save extends \Magento\Backend\App\Action
             $model->setData($data);
 
             $this->_eventManager->dispatch(
-                'cms_page_prepare_save',
-                ['page' => $model, 'request' => $this->getRequest()]
+                'oiler_seorules_rule_prepare_save',
+                ['rule' => $model, 'request' => $this->getRequest()]
             );
 
             if (!$this->dataProcessor->validate($data)) {
-                return $resultRedirect->setPath('*/*/edit', ['page_id' => $model->getId(), '_current' => true]);
+                return $resultRedirect->setPath('*/*/edit', ['rule_id' => $model->getId(), '_current' => true]);
             }
 
             try {
-                $this->pageRepository->save($model);
-                $this->messageManager->addSuccessMessage(__('You saved the page.'));
-                $this->dataPersistor->clear('cms_page');
+                $this->ruleRepository->save($model);
+                $this->messageManager->addSuccessMessage(__('You saved the rule.'));
+                $this->dataPersistor->clear('seorules');
+
                 if ($this->getRequest()->getParam('back')) {
-                    return $resultRedirect->setPath('*/*/edit', ['page_id' => $model->getId(), '_current' => true]);
+                    return $resultRedirect->setPath('*/*/edit', ['rule_id' => $model->getId(), '_current' => true]);
                 }
                 return $resultRedirect->setPath('*/*/');
             } catch (LocalizedException $e) {
                 $this->messageManager->addExceptionMessage($e->getPrevious() ?:$e);
             } catch (\Exception $e) {
-                $this->messageManager->addExceptionMessage($e, __('Something went wrong while saving the page.'));
+                $this->messageManager->addExceptionMessage($e, __('Something went wrong while saving the seo rule.'));
             }
 
-            $this->dataPersistor->set('cms_page', $data);
-            return $resultRedirect->setPath('*/*/edit', ['page_id' => $this->getRequest()->getParam('page_id')]);
+            $this->dataPersistor->set('seorules', $data);
+            return $resultRedirect->setPath('*/*/edit', ['rule_id' => $this->getRequest()->getParam('rule_id')]);
         }
+
         return $resultRedirect->setPath('*/*/');
     }
 }

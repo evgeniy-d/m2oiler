@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
     <router id="admin">
-        <route id="seorule" frontName="seorule">
+        <route id="seorules" frontName="seorules">
             <module name="Oakma_SeoRule" before="Magento_Backend" />
         </route>
     </router>
