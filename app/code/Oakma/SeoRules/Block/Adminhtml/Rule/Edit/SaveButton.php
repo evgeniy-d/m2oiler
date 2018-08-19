@@ -1,15 +1,11 @@
 <?php
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
-namespace Magento\Cms\Block\Adminhtml\Page\Edit;
+
+namespace Oakma\SeoRules\Block\Adminhtml\Rule\Edit;
 
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 
 /**
  * Class SaveButton
- * @package Magento\Customer\Block\Adminhtml\Edit
  */
 class SaveButton extends GenericButton implements ButtonProviderInterface
 {

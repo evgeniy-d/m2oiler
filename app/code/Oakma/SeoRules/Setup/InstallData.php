@@ -3,7 +3,7 @@
 namespace Oakma\SeoRules\Setup;
 
 use Oakma\SeoRules\Model\Rule\Entity;
-use Oakma\SeoRules\Model\Rule\EntityFactory;
+use Oakma\SeoRules\Model\ResourceModelRule\EntityFactory;
 use Magento\Framework\Setup\InstallDataInterface;
 use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\ModuleDataSetupInterface;

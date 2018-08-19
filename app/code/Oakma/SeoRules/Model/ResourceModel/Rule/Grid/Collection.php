@@ -54,11 +54,10 @@ class Collection extends RuleCollection implements SearchResultInterface
             $logger,
             $fetchStrategy,
             $eventManager,
-            $storeManager,
-            $metadataPool,
             $connection,
             $resource
         );
+
         $this->_eventPrefix = $eventPrefix;
         $this->_eventObject = $eventObject;
         $this->_init($model, $resourceModel);

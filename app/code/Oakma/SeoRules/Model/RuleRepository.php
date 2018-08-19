@@ -1,47 +1,42 @@
 <?php
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
-namespace Magento\Cms\Model;
 
-use Magento\Cms\Api\Data;
-use Magento\Cms\Api\PageRepositoryInterface;
-use Magento\Framework\Api\DataObjectHelper;
-use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
+namespace Oakma\SeoRules\Model;
+
+use Oakma\SeoRules\Api\RuleRepositoryInterface;
+use Oakma\SeoRules\Api\Data\RuleInterface;
+use Oakma\SeoRules\Api\Data\RuleSearchResultsInterfaceFactory;
+use Oakma\SeoRules\Model\ResourceModel\Rule as ResourceRule;
+use Oakma\SeoRules\Model\ResourceModel\Rule\CollectionFactory as RuleCollectionFactory;
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
-use Magento\Framework\Reflection\DataObjectProcessor;
-use Magento\Cms\Model\ResourceModel\Page as ResourcePage;
-use Magento\Cms\Model\ResourceModel\Page\CollectionFactory as PageCollectionFactory;
-use Magento\Store\Model\StoreManagerInterface;
+use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
 
 /**
- * Class PageRepository
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ * Class RuleRepository
  */
-class PageRepository implements PageRepositoryInterface
+class RuleRepository implements RuleRepositoryInterface
 {
     /**
-     * @var ResourcePage
+     * @var ResourceRule
      */
     protected $resource;
 
     /**
-     * @var PageFactory
+     * @var RuleFactory
      */
     protected $pageFactory;
 
     /**
-     * @var PageCollectionFactory
+     * @var RuleCollectionFactory
      */
-    protected $pageCollectionFactory;
+    protected $ruleCollectionFactory;
 
     /**
-     * @var Data\PageSearchResultsInterfaceFactory
+     * @var RuleSearchResultsInterfaceFactory
      */
     protected $searchResultsFactory;
+
 
     /**
      * @var DataObjectHelper
@@ -54,163 +49,134 @@ class PageRepository implements PageRepositoryInterface
     protected $dataObjectProcessor;
 
     /**
-     * @var \Magento\Cms\Api\Data\PageInterfaceFactory
-     */
-    protected $dataPageFactory;
-
-    /**
-     * @var \Magento\Store\Model\StoreManagerInterface
-     */
-    private $storeManager;
-
-    /**
      * @var CollectionProcessorInterface
      */
     private $collectionProcessor;
 
     /**
-     * @param ResourcePage $resource
-     * @param PageFactory $pageFactory
-     * @param Data\PageInterfaceFactory $dataPageFactory
-     * @param PageCollectionFactory $pageCollectionFactory
-     * @param Data\PageSearchResultsInterfaceFactory $searchResultsFactory
-     * @param DataObjectHelper $dataObjectHelper
-     * @param DataObjectProcessor $dataObjectProcessor
-     * @param StoreManagerInterface $storeManager
+     * @param ResourceRule $resource
+     * @param RuleFactory $ruleFactory
+     * @param RuleCollectionFactory $ruleCollectionFactory
+     * @param RuleSearchResultsInterfaceFactory $searchResultsFactory
      * @param CollectionProcessorInterface $collectionProcessor
      */
     public function __construct(
-        ResourcePage $resource,
-        PageFactory $pageFactory,
-        Data\PageInterfaceFactory $dataPageFactory,
-        PageCollectionFactory $pageCollectionFactory,
-        Data\PageSearchResultsInterfaceFactory $searchResultsFactory,
-        DataObjectHelper $dataObjectHelper,
-        DataObjectProcessor $dataObjectProcessor,
-        StoreManagerInterface $storeManager,
+        ResourceRule $resource,
+        RuleFactory $ruleFactory,
+        RuleCollectionFactory $ruleCollectionFactory,
+        RuleSearchResultsInterfaceFactory $searchResultsFactory,
         CollectionProcessorInterface $collectionProcessor = null
     ) {
         $this->resource = $resource;
-        $this->pageFactory = $pageFactory;
-        $this->pageCollectionFactory = $pageCollectionFactory;
+        $this->ruleFactory = $ruleFactory;
+        $this->ruleCollectionFactory = $ruleCollectionFactory;
         $this->searchResultsFactory = $searchResultsFactory;
-        $this->dataObjectHelper = $dataObjectHelper;
-        $this->dataPageFactory = $dataPageFactory;
-        $this->dataObjectProcessor = $dataObjectProcessor;
-        $this->storeManager = $storeManager;
-        $this->collectionProcessor = $collectionProcessor ?: $this->getCollectionProcessor();
+        $this->collectionProcessor = $collectionProcessor;
     }
 
     /**
-     * Save Page data
+     * Save Seo Rule data
      *
-     * @param \Magento\Cms\Api\Data\PageInterface $page
-     * @return Page
+     * @param RuleInterface $rule
+     * @return RuleInterface
+     *
      * @throws CouldNotSaveException
      */
-    public function save(\Magento\Cms\Api\Data\PageInterface $page)
+    public function save(RuleInterface $rule)
     {
-        if ($page->getStoreId() === null) {
-            $storeId = $this->storeManager->getStore()->getId();
-            $page->setStoreId($storeId);
+        if ($rule->getStoreId() === null) {
+            $rule->setStoreIds(0);
         }
+
         try {
-            $this->resource->save($page);
+            $this->resource->save($rule);
         } catch (\Exception $exception) {
             throw new CouldNotSaveException(
-                __('Could not save the page: %1', $exception->getMessage()),
+                __('Could not save the rule: %1', $exception->getMessage()),
                 $exception
             );
         }
-        return $page;
+
+        return $rule;
     }
 
     /**
-     * Load Page data by given Page Identity
+     * Load rule data by given ID
      *
-     * @param string $pageId
-     * @return Page
+     * @param integer $ruleId
+     *
+     * @return RuleInterface
+     *
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function getById($pageId)
+    public function getById($ruleId)
     {
-        $page = $this->pageFactory->create();
-        $page->load($pageId);
-        if (!$page->getId()) {
-            throw new NoSuchEntityException(__('CMS Page with id "%1" does not exist.', $pageId));
+        $rule = $this->ruleFactory->create();
+        $rule->load($ruleId);
+
+        if (!$rule->getId()) {
+            throw new NoSuchEntityException(__('Seo rule with id "%1" does not exist.', $ruleId));
         }
-        return $page;
+
+        return $rule;
     }
 
     /**
-     * Load Page data collection by given search criteria
+     * Load rule data collection by given search criteria
      *
-     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
-     * @SuppressWarnings(PHPMD.NPathComplexity)
      * @param \Magento\Framework\Api\SearchCriteriaInterface $criteria
-     * @return \Magento\Cms\Api\Data\PageSearchResultsInterface
+     *
+     * @return \Oakma\SeoRules\Api\Data\RuleSearchResultsInterface
      */
     public function getList(\Magento\Framework\Api\SearchCriteriaInterface $criteria)
     {
-        /** @var \Magento\Cms\Model\ResourceModel\Page\Collection $collection */
-        $collection = $this->pageCollectionFactory->create();
+        $collection = $this->ruleCollectionFactory->create();
 
         $this->collectionProcessor->process($criteria, $collection);
 
-        /** @var Data\PageSearchResultsInterface $searchResults */
         $searchResults = $this->searchResultsFactory->create();
         $searchResults->setSearchCriteria($criteria);
         $searchResults->setItems($collection->getItems());
         $searchResults->setTotalCount($collection->getSize());
+
         return $searchResults;
     }
 
     /**
-     * Delete Page
+     * Delete rule
      *
-     * @param \Magento\Cms\Api\Data\PageInterface $page
+     * @param RuleInterface $rule
+     *
      * @return bool
+     *
      * @throws CouldNotDeleteException
      */
-    public function delete(\Magento\Cms\Api\Data\PageInterface $page)
+    public function delete(RuleInterface $rule)
     {
         try {
-            $this->resource->delete($page);
+            $this->resource->delete($rule);
         } catch (\Exception $exception) {
             throw new CouldNotDeleteException(__(
-                'Could not delete the page: %1',
+                'Could not delete the rule: %1',
                 $exception->getMessage()
             ));
         }
+
         return true;
     }
 
     /**
-     * Delete Page by given Page Identity
+     * Delete rule by given ID
      *
-     * @param string $pageId
+     * @param string $ruleId
+     *
      * @return bool
+     *
      * @throws CouldNotDeleteException
      * @throws NoSuchEntityException
      */
-    public function deleteById($pageId)
+    public function deleteById($ruleId)
     {
-        return $this->delete($this->getById($pageId));
-    }
-
-    /**
-     * Retrieve collection processor
-     *
-     * @deprecated 101.1.0
-     * @return CollectionProcessorInterface
-     */
-    private function getCollectionProcessor()
-    {
-        if (!$this->collectionProcessor) {
-            $this->collectionProcessor = \Magento\Framework\App\ObjectManager::getInstance()->get(
-                'Magento\Cms\Model\Api\SearchCriteria\PageCollectionProcessor'
-            );
-        }
-        return $this->collectionProcessor;
+        return $this->delete($this->getById($ruleId));
     }
 }

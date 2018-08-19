@@ -41,23 +41,4 @@ interface RuleManagementInterface
 	 * @return string
 	 */
 	public function fetchSeoText();
-
-	/**
-	 * Replace variables in rule field
-	 *
-	 * @param string $text
-	 *
-	 * @return string
-	 */
-	protected function _replaceVariables(string $text);
-
-	/**
-	 * Replace all filter's tag by value
-	 *
-	 * @param string $value
-	 * @param string $text
-	 *
-	 * @return string
-	 */
-	protected function _replaceAllFilters(string $value, string $text);
 }

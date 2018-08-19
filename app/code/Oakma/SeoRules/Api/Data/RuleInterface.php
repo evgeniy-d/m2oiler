@@ -47,11 +47,6 @@ interface RuleInterface
     /**
      * @return string
      */
-    public function getMetaKeywords();
-
-    /**
-     * @return string
-     */
     public function getSeoH1();
 
     /**

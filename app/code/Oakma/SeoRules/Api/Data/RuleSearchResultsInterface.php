@@ -8,7 +8,7 @@ use Magento\Framework\Api\SearchResultsInterface;
  * Interface for rule search results.
  * @api
  */
-interface PageSearchResultsInterface extends SearchResultsInterface
+interface RuleSearchResultsInterface extends SearchResultsInterface
 {
     /**
      * Get rules list.

@@ -97,7 +97,7 @@ class Save extends \Magento\Backend\App\Action
             try {
                 $this->ruleRepository->save($model);
                 $this->messageManager->addSuccessMessage(__('You saved the rule.'));
-                $this->dataPersistor->clear('seorules');
+                $this->dataPersistor->clear('seorules_rule');
 
                 if ($this->getRequest()->getParam('back')) {
                     return $resultRedirect->setPath('*/*/edit', ['rule_id' => $model->getId(), '_current' => true]);
@@ -109,7 +109,7 @@ class Save extends \Magento\Backend\App\Action
                 $this->messageManager->addExceptionMessage($e, __('Something went wrong while saving the seo rule.'));
             }
 
-            $this->dataPersistor->set('seorules', $data);
+            $this->dataPersistor->set('seorules_rule', $data);
             return $resultRedirect->setPath('*/*/edit', ['rule_id' => $this->getRequest()->getParam('rule_id')]);
         }
 

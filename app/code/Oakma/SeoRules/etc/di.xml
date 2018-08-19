@@ -13,7 +13,7 @@
         </arguments>
     </type>
 
-    <virtualType name="Oakma\SeoRules\Model\Api\SearchCriteria\PageCollectionProcessor" type="Magento\Framework\Api\SearchCriteria\CollectionProcessor">
+    <virtualType name="Oakma\SeoRules\Model\Api\SearchCriteria\RuleCollectionProcessor" type="Magento\Framework\Api\SearchCriteria\CollectionProcessor">
         <arguments>
             <argument name="processors" xsi:type="array">
                 <item name="filters" xsi:type="object">Magento\Framework\Api\SearchCriteria\CollectionProcessor\FilterProcessor</item>
@@ -23,9 +23,9 @@
         </arguments>
     </virtualType>
 
-    <type name="Oakma\SeoRules\Model\PageRepository">
+    <type name="Oakma\SeoRules\Model\RuleRepository">
         <arguments>
-            <argument name="collectionProcessor" xsi:type="object">Oakma\SeoRules\Model\Api\SearchCriteria\PageCollectionProcessor</argument>
+            <argument name="collectionProcessor" xsi:type="object">Oakma\SeoRules\Model\Api\SearchCriteria\RuleCollectionProcessor</argument>
         </arguments>
     </type>
 
@@ -36,4 +36,13 @@
             </argument>
         </arguments>
     </type>
+
+    <!--<virtualType name="Oakma\SeoRules\Ui\Component\Listing\Column\Rule\Options\SearchCriteria" type="Magento\Framework\Api\SearchCriteriaInterface" />
+
+    <type name="Oakma\SeoRules\Ui\Component\Listing\Column\Rule\Options">
+        <arguments>
+            <argument name="ruleRepository" xsi:type="object">Oakma\SeoRules\Api\RuleRepositoryInterface</argument>
+            <argument name="searchCriteria" xsi:type="object">Oakma\SeoRules\Ui\Component\Listing\Column\Rule\Options\SearchCriteria</argument>
+        </arguments>
+    </type>-->
 </config>

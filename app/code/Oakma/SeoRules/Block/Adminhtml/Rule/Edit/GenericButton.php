@@ -1,12 +1,9 @@
 <?php
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
-namespace Magento\Cms\Block\Adminhtml\Page\Edit;
+
+namespace Oakma\SeoRules\Block\Adminhtml\Rule\Edit;
 
 use Magento\Backend\Block\Widget\Context;
-use Magento\Cms\Api\PageRepositoryInterface;
+use Oakma\SeoRules\Api\RuleRepositoryInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
 
 /**
@@ -20,32 +17,32 @@ class GenericButton
     protected $context;
 
     /**
-     * @var PageRepositoryInterface
+     * @var RuleRepositoryInterface
      */
-    protected $pageRepository;
+    protected $ruleRepository;
 
     /**
      * @param Context $context
-     * @param PageRepositoryInterface $pageRepository
+     * @param RuleRepositoryInterface $ruleRepository
      */
     public function __construct(
         Context $context,
-        PageRepositoryInterface $pageRepository
+        RuleRepositoryInterface $ruleRepository
     ) {
         $this->context = $context;
-        $this->pageRepository = $pageRepository;
+        $this->ruleRepository = $ruleRepository;
     }
 
     /**
-     * Return CMS page ID
+     * Return seo rule ID
      *
      * @return int|null
      */
-    public function getPageId()
+    public function getRuleId()
     {
         try {
-            return $this->pageRepository->getById(
-                $this->context->getRequest()->getParam('page_id')
+            return $this->ruleRepository->getById(
+                $this->context->getRequest()->getParam('rule_id')
             )->getId();
         } catch (NoSuchEntityException $e) {
         }

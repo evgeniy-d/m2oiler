@@ -26,7 +26,7 @@
             <updateUrl path="mui/index/render"/>
         </settings>
         <aclResource>Oakma_SeoRule::rule</aclResource>
-        <dataProvider class="Oakma\SeoRules\Ui\Component\DataProvider" name="seorules_listing_data_source">
+        <dataProvider class="Oakma\SeoRules\Ui\Component\GridDataProvider" name="seorules_listing_data_source">
             <settings>
                 <requestFieldName>rule_id</requestFieldName>
                 <primaryFieldName>id</primaryFieldName>
