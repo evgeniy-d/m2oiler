@@ -43,7 +43,7 @@ class Index extends \Magento\Backend\App\Action
         $resultPage->setActiveMenu('Oakma_SeoRule::rule');
         $resultPage->addBreadcrumb(__('Seo Rules'), __('Seo Rules'));
         $resultPage->addBreadcrumb(__('Manage Rules'), __('Manage Rules'));
-        $resultPage->getConfig()->getTitle()->prepend(__('Rules'));
+        $resultPage->getConfig()->getTitle()->prepend(__('Seo Rules'));
 
         return $resultPage;
     }
