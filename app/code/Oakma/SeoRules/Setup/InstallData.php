@@ -3,7 +3,8 @@
 namespace Oakma\SeoRules\Setup;
 
 use Oakma\SeoRules\Model\Rule\Entity;
-use Oakma\SeoRules\Model\ResourceModelRule\EntityFactory;
+use Oakma\SeoRules\Model\ResourceModel\Rule\Entity as EntityResource;
+use Oakma\SeoRules\Model\Rule\EntityFactory;
 use Magento\Framework\Setup\InstallDataInterface;
 use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
@@ -18,16 +19,25 @@ class InstallData implements InstallDataInterface
      *
      * @var EntityFactory
      */
-    private $entityFactory;
+    protected $entityFactory;
+
+    /**
+     * @var EntityResource
+     */
+    protected $resource;
 
     /**
      * Init
      *
      * @param EntityFactory $entityFactory
+     * @param EntityResource $resource
      */
-    public function __construct(EntityFactory $entityFactory)
-    {
+    public function __construct(
+        EntityFactory $entityFactory,
+        EntityResource $resource
+    ) {
         $this->entityFactory = $entityFactory;
+        $this->resource = $resource;
     }
 
     /**
@@ -38,17 +48,14 @@ class InstallData implements InstallDataInterface
     {
         $entities = [
             [
-                'id'    => 1,
                 'name'  => 'Default',
                 'key'   => 'default'
             ],
             [
-                'id'    => 2,
                 'name'  => 'Category',
                 'key'   => 'category'
             ],
             [
-                'id'    => 3,
                 'name'  => 'CMS Page',
                 'key'   => 'cms_page'
             ]
@@ -58,7 +65,7 @@ class InstallData implements InstallDataInterface
          * Insert default entities
          */
         foreach ($entities as $data) {
-            $this->createEntity()->setData($data)->save();
+            $this->resource->save($this->createEntity()->setData($data));
         }
 
         $setup->endSetup();
