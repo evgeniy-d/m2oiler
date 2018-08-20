@@ -107,7 +107,7 @@
             <formElements>
                 <select>
                     <settings>
-                        <options class="Oakma\SeoRules\Ui\Component\Listing\Column\SeoRules\Options"/>
+                        <options class="Oakma\SeoRules\Ui\Component\Listing\Column\Rule\Options"/>
                     </settings>
                 </select>
             </formElements>
