@@ -3,6 +3,7 @@
 namespace Oakma\SeoRules\Model\Rule\Source;
 
 use Magento\Framework\Data\OptionSourceInterface;
+use Oakma\SeoRules\Api\Rule\EntityManagementInterface;
 
 /**
  * Class Entity
@@ -10,18 +11,18 @@ use Magento\Framework\Data\OptionSourceInterface;
 class Entity implements OptionSourceInterface
 {
     /**
-     * @var \Magento\Cms\Model\Page
+     * @var EntityManagementInterface
      */
-    protected $cmsPage;
+    protected $entityManagement;
 
     /**
      * Constructor
      *
-     * @param \Magento\Cms\Model\Page $cmsPage
+     * @param EntityManagementInterface $entityManagement
      */
-    public function __construct(\Magento\Cms\Model\Page $entityRepository)
+    public function __construct(EntityManagementInterface $entityManagement)
     {
-        $this->cmsPage = $cmsPage;
+        $this->entityManagement = $entityManagement;
     }
 
     /**
@@ -31,12 +32,12 @@ class Entity implements OptionSourceInterface
      */
     public function toOptionArray()
     {
-        $availableOptions = $this->cmsPage->getAvailableStatuses();
+        $availableOptions = $this->entityManagement->getAvailableEntities();
         $options = [];
-        foreach ($availableOptions as $key => $value) {
+        foreach ($availableOptions as $entity) {
             $options[] = [
-                'label' => $value,
-                'value' => $key,
+                'label' => $entity->getName(),
+                'value' => $entity->getId(),
             ];
         }
         return $options;

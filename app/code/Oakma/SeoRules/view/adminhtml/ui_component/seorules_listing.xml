@@ -155,7 +155,7 @@
                 <label translate="true">Rule Name</label>
             </settings>
         </column>
-        <column name="entity">
+        <column name="entity" component="Magento_Ui/js/grid/columns/select">
             <settings>
                 <options class="Oakma\SeoRules\Model\Rule\Source\Entity"/>
                 <filter>select</filter>
@@ -184,7 +184,7 @@
                 <label translate="true">Filter Value IDs</label>
             </settings>
         </column>
-        <column name="status">
+        <column name="status" component="Magento_Ui/js/grid/columns/select">
             <settings>
                 <options class="Oakma\SeoRules\Model\Rule\Source\Status"/>
                 <filter>select</filter>

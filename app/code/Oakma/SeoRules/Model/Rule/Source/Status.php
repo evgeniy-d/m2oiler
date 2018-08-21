@@ -16,16 +16,14 @@ class Status implements OptionSourceInterface
      */
     public function toOptionArray()
     {
-        $availableOptions = $this->cmsPage->getAvailableStatuses();
-
         $options = [
 	        [
-	        	'label' => 1,
-	            'value' => __('Enabled')
+	        	'value' => 1,
+	            'label' => __('Enabled')
 	        ],
 	        [
-		        'label' => 0,
-		        'value' => __('Disabled')
+		        'value' => 0,
+		        'label' => __('Disabled')
 	        ],
         ];
 

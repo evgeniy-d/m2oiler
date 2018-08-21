@@ -1,6 +1,6 @@
 <?php
 
-namespace Oakma\SeoRules\Model\ResourceModel\Page\Grid;
+namespace Oakma\SeoRules\Model\ResourceModel\Rule\Grid;
 
 use Magento\Framework\Api\Search\SearchResultInterface;
 use Magento\Framework\Api\Search\AggregationInterface;

@@ -159,7 +159,7 @@ class InstallSchema implements InstallSchemaInterface
         )->addForeignKey(
             $installer->getFkName('oakma_seorules', 'entity', 'oakma_seorules_entity', 'id'),
             'entity',
-            $installer->getTable('oakma_seorules_enitity'),
+            $installer->getTable('oakma_seorules_entity'),
             'id',
             \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
         );

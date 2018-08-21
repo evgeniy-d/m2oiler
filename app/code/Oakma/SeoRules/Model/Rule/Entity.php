@@ -25,4 +25,24 @@ class Entity extends AbstractModel implements EntityInterface
 	{
 		$this->_init('Oakma\SeoRules\Model\ResourceModel\Rule\Entity');
 	}
+
+    /**
+     * Get name of entity
+     *
+     * @return string
+     */
+	public function getName()
+    {
+        return $this->getData(EntityInterface::ENTITY_NAME);
+    }
+
+    /**
+     * Get key of entity
+     *
+     * @return string
+     */
+    public function getKey()
+    {
+        return $this->getData(EntityInterface::ENTITY_KEY);
+    }
 }

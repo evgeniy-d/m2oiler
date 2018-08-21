@@ -31,6 +31,14 @@
         </arguments>
     </type>
 
+    <type name="Oakma\SeoRules\Model\ResourceModel\Rule\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">oakma_seorules</argument>
+            <argument name="eventPrefix" xsi:type="string">oakma_seorules_rule_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">rule_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Oakma\SeoRules\Model\ResourceModel\Rule</argument>
+        </arguments>
+    </type>
     <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
         <arguments>
             <argument name="collections" xsi:type="array">
@@ -44,13 +52,4 @@
             <argument name="meta" xsi:type="array"></argument>
         </arguments>
     </type>
-
-    <!--<virtualType name="Oakma\SeoRules\Ui\Component\Listing\Column\Rule\Options\SearchCriteria" type="Magento\Framework\Api\SearchCriteriaInterface" />
-
-    <type name="Oakma\SeoRules\Ui\Component\Listing\Column\Rule\Options">
-        <arguments>
-            <argument name="ruleRepository" xsi:type="object">Oakma\SeoRules\Api\RuleRepositoryInterface</argument>
-            <argument name="searchCriteria" xsi:type="object">Oakma\SeoRules\Ui\Component\Listing\Column\Rule\Options\SearchCriteria</argument>
-        </arguments>
-    </type>-->
 </config>

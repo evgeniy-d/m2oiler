@@ -7,5 +7,10 @@ namespace Oakma\SeoRules\Api\Rule;
  */
 interface EntityManagementInterface
 {
-
+    /**
+     * Get available seo rule's entities
+     *
+     * @return \Oakma\SeoRules\Api\Data\Rule\EntityInterface[]
+     */
+    public function getAvailableEntities();
 }
