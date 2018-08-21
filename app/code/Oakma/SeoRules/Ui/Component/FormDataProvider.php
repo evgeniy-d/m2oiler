@@ -6,9 +6,9 @@ use Oakma\SeoRules\Model\ResourceModel\Rule\CollectionFactory as RuleCollectionF
 use Magento\Framework\App\Request\DataPersistorInterface;
 
 /**
- * Class DataProvider
+ * Class FormDataProvider
  */
-class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
+class FormDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
 {
     /**
      * @var RuleCollectionFactory

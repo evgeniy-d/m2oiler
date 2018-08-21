@@ -2,8 +2,10 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <preference for="Oakma\SeoRules\Api\Data\RuleSearchResultsInterface" type="Magento\Framework\Api\SearchResults" />
     <preference for="Oakma\SeoRules\Api\Data\RuleInterface" type="Oakma\SeoRules\Model\Rule" />
+    <preference for="Oakma\SeoRules\Api\Data\Rule\EntityInterface" type="Oakma\SeoRules\Model\Rule\Entity" />
     <preference for="Oakma\SeoRules\Api\RuleRepositoryInterface" type="Oakma\SeoRules\Model\RuleRepository" />
     <preference for="Oakma\SeoRules\Api\RuleManagementInterface" type="Oakma\SeoRules\Model\RuleManagement" />
+    <preference for="Oakma\SeoRules\Api\Rule\EntityManagementInterface" type="Oakma\SeoRules\Model\Rule\EntityManagement" />
 
     <type name="Magento\Framework\Model\Entity\RepositoryFactory">
         <arguments>
@@ -34,6 +36,12 @@
             <argument name="collections" xsi:type="array">
                 <item name="seorules_listing_data_source" xsi:type="string">Oakma\SeoRules\Model\ResourceModel\Rule\Grid\Collection</item>
             </argument>
+        </arguments>
+    </type>
+
+    <type name="Oakma\SeoRules\Ui\Component\GridDataProvider">
+        <arguments>
+            <argument name="meta" xsi:type="array"></argument>
         </arguments>
     </type>
 

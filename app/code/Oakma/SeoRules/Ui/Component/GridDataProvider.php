@@ -8,7 +8,7 @@ use Magento\Framework\App\RequestInterface;
 use Magento\Framework\AuthorizationInterface;
 use Magento\Framework\View\Element\UiComponent\DataProvider\Reporting;
 
-class DataProvider extends \Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider
+class GridDataProvider extends \Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider
 {
     /**
      * @var AuthorizationInterface
@@ -25,6 +25,7 @@ class DataProvider extends \Magento\Framework\View\Element\UiComponent\DataProvi
      * @param FilterBuilder $filterBuilder
      * @param array $meta
      * @param array $data
+     * @param AuthorizationInterface $authorization
      */
     public function __construct(
         $name,
@@ -50,8 +51,8 @@ class DataProvider extends \Magento\Framework\View\Element\UiComponent\DataProvi
             $data
         );
 
-        $this->meta = array_replace_recursive($meta, $this->prepareMetadata());
 	    $this->authorization = $authorization;
+        $this->meta = array_replace_recursive($meta, $this->prepareMetadata());
     }
 
     /**

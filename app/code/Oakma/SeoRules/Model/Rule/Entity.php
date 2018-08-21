@@ -1,14 +1,15 @@
 <?php
 namespace Oakma\SeoRules\Model\Rule;
 
-use \Magento\Framework\Model\AbstractModel;
+use Magento\Framework\Model\AbstractModel;
+use Oakma\SeoRules\Api\Data\Rule\EntityInterface;
 
 /**
  * Class Entity
  *
  * @package Oakma\SeoRules\Model\Rule
  */
-class Entity extends AbstractModel
+class Entity extends AbstractModel implements EntityInterface
 {
 	/**
 	 * Prefix of model events names

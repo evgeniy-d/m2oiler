@@ -5,7 +5,7 @@ namespace Oakma\SeoRules\Api\Data\Rule;
  * Seo entity interface.
  * @api
  */
-interface EtityInterface
+interface EntityInterface
 {
 	/**
 	 * Entity 'default'
@@ -15,7 +15,7 @@ interface EtityInterface
 	/**
 	 * Entity 'product category'
 	 */
-	const TYPE_DEFAULT_CODE     = 'category';
+	const TYPE_CATEGORY_CODE     = 'category';
 
 	/**
 	 * Entity CMS page

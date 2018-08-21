@@ -18,6 +18,21 @@
             <dep>seorules_listing.seorules_listing_data_source</dep>
         </deps>
     </settings>
+    <!-- <dataSource name="seorules_listing_data_source" component="Magento_Ui/js/grid/provider">
+        <settings>
+            <storageConfig>
+                <param name="indexField" xsi:type="string">id</param>
+            </storageConfig>
+            <updateUrl path="mui/index/render"/>
+        </settings>
+        <aclResource>Oakma_SeoRule::rule</aclResource>
+        <dataProvider class="Oakma\SeoRules\Ui\Component\GridDataProvider" name="seorules_listing_data_source">
+            <settings>
+                <requestFieldName>rule_id</requestFieldName>
+                <primaryFieldName>id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource> -->
     <dataSource name="seorules_listing_data_source" component="Magento_Ui/js/grid/provider">
         <settings>
             <storageConfig>
@@ -59,7 +74,7 @@
             <filterSelect name="store_ids" provider="${ $.parentName }">
                 <settings>
                     <captionValue>0</captionValue>
-                    <options class="Oakma\SeoRules\Ui\Component\Listing\Column\SeoRule\Options"/>
+                    <options class="Oakma\SeoRules\Ui\Component\Listing\Column\Rule\Options"/>
                     <label translate="true">Store View</label>
                     <dataScope>store_ids</dataScope>
                     <imports>

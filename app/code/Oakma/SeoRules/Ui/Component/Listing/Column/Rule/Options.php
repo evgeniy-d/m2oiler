@@ -1,37 +1,17 @@
 <?php
-
 namespace Oakma\SeoRules\Ui\Component\Listing\Column\Rule;
 
-use Oakma\SeoRules\Api\RuleRepositoryInterface;
-use Magento\Framework\Api\SearchCriteriaInterface;
-use Oakma\SeoRules\Api\Data\RuleSearchResultsInterface;
+use Magento\Store\Ui\Component\Listing\Column\Store\Options as StoreOptions;
 
 /**
- * Options for seo rules
+ * Store Options
  */
-class Options implements \Magento\Framework\Data\OptionSourceInterface
+class Options extends StoreOptions
 {
     /**
-     * @var array
+     * All Store Views value
      */
-    protected $options;
-
-    /**
-     * @var RuleSearchResultsInterface
-     */
-    protected $rules;
-
-    /**
-     * Options constructor.
-     *
-     * @param RuleRepositoryInterface $ruleRepository
-     */
-    public function __construct(
-        RuleRepositoryInterface $ruleRepository,
-        SearchCriteriaInterface $searchCriteria
-    ) {
-      $this->rules = $ruleRepository->getList($searchCriteria);
-    }
+    const ALL_STORE_VIEWS = '0';
 
     /**
      * Get options
@@ -44,17 +24,12 @@ class Options implements \Magento\Framework\Data\OptionSourceInterface
             return $this->options;
         }
 
-        $this->options[0]['label'] = __('No parent rule');
-        $this->options[0]['value'] = 0;
+        $this->currentOptions['All Store Views']['label'] = __('All Store Views');
+        $this->currentOptions['All Store Views']['value'] = self::ALL_STORE_VIEWS;
 
+        $this->generateCurrentOptions();
 
-        foreach ($this->rules as $rule) {
-            $this->options[] = [
-                'label' => __('ID') . ': ' . $rule->getId() . ' ' . $rule->getRuleName(),
-                'value' => $rule->getId()
-            ];
-        }
-
+        $this->options = array_values($this->currentOptions);
 
         return $this->options;
     }
