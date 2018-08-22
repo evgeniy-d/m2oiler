@@ -98,6 +98,16 @@
                     <label translate="true">Enable</label>
                 </settings>
             </action>
+            <action name="edit">
+                <settings>
+                    <callback>
+                        <target>editSelected</target>
+                        <provider>seorules_listing.seorules_listing.seorules_columns_editor</provider>
+                    </callback>
+                    <type>edit</type>
+                    <label translate="true">Edit</label>
+                </settings>
+            </action>
         </massaction>
         <paging name="listing_paging"/>
     </listingToolbar>
@@ -105,16 +115,16 @@
         <settings>
             <editorConfig>
                 <param name="clientConfig" xsi:type="array">
-                    <item name="saveUrl" xsi:type="url" path="serule/rule/inlineEdit"/>
+                    <item name="saveUrl" xsi:type="url" path="seorules/rule/inlineEdit"/>
                     <item name="validateBeforeSave" xsi:type="boolean">false</item>
                 </param>
-                <param name="indexField" xsi:type="string">rule_id</param>
+                <param name="indexField" xsi:type="string">id</param>
                 <param name="enabled" xsi:type="boolean">true</param>
-                <param name="selectProvider" xsi:type="string">cms_page_listing.cms_page_listing.cms_page_columns.ids</param>
+                <param name="selectProvider" xsi:type="string">seorules_listing.seorules_listing.seorules_columns.ids</param>
             </editorConfig>
             <childDefaults>
                 <param name="fieldAction" xsi:type="array">
-                    <item name="provider" xsi:type="string">cms_page_listing.cms_page_listing.cms_page_columns_editor</item>
+                    <item name="provider" xsi:type="string">seorules_listing.seorules_listing.seorules_columns_editor</item>
                     <item name="target" xsi:type="string">startEdit</item>
                     <item name="params" xsi:type="array">
                         <item name="0" xsi:type="string">${ $.$data.rowIndex }</item>
@@ -198,10 +208,13 @@
         <column name="sort_order">
             <settings>
                 <filter>textRange</filter>
+                <editor>
+                    <editorType>text</editorType>
+                </editor>
                 <label translate="true">Sort Order</label>
             </settings>
         </column>
-        <column name="store_ids" class="Magento\Store\Ui\Component\Listing\Column\Store">
+        <column name="store_ids" class="Oakma\SeoRules\Ui\Component\Listing\Column\Store">
             <settings>
                 <label translate="true">Store View</label>
                 <bodyTmpl>ui/grid/cells/html</bodyTmpl>

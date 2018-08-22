@@ -10,7 +10,42 @@
     <type name="Magento\Framework\Model\Entity\RepositoryFactory">
         <arguments>
             <argument name="entities" xsi:type="array">
-                <item name="Oakma\SeoRules\Api\Data\PageInterface" xsi:type="string">Oakma\SeoRules\Api\RuleRepositoryInterface</item>
+                <item name="Oakma\SeoRules\Api\Data\RuleInterface" xsi:type="string">Oakma\SeoRules\Api\RuleRepositoryInterface</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\EntityManager\MetadataPool">
+        <arguments>
+            <argument name="metadata" xsi:type="array">
+                <item name="Oakma\SeoRules\Api\Data\RuleInterface" xsi:type="array">
+                    <item name="entityTableName" xsi:type="string">oakma_seorules</item>
+                    <item name="identifierField" xsi:type="string">id</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\EntityManager\Operation\ExtensionPool">
+        <arguments>
+            <argument name="extensionActions" xsi:type="array">
+                <item name="Oakma\SeoRules\Api\Data\RuleInterface" xsi:type="array">
+                    <item name="read" xsi:type="array">
+                        <item name="storeReader" xsi:type="string">Oakma\SeoRules\Model\ResourceModel\Rule\Relation\Store\ReadHandler</item>
+                    </item>
+                    <item name="create" xsi:type="array">
+                        <item name="storeCreator" xsi:type="string">Oakma\SeoRules\Model\ResourceModel\Rule\Relation\Store\SaveHandler</item>
+                    </item>
+                    <item name="update" xsi:type="array">
+                        <item name="storeUpdater" xsi:type="string">Oakma\SeoRules\Model\ResourceModel\Rule\Relation\Store\SaveHandler</item>
+                    </item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Framework\EntityManager\HydratorPool">
+        <arguments>
+            <argument name="hydrators" xsi:type="array">
+                <item name="Oakma\SeoRules\Api\Data\RuleInterface" xsi:type="string">Magento\Framework\EntityManager\AbstractModelHydrator</item>
             </argument>
         </arguments>
     </type>
@@ -52,4 +87,10 @@
             <argument name="meta" xsi:type="array"></argument>
         </arguments>
     </type>
+
+    <virtualType name="Oakma\SeoRules\Ui\Component\Listing\Column\Store" type="Magento\Store\Ui\Component\Listing\Column\Store">
+        <arguments>
+            <argument name="storeKey" xsi:type="string">store_ids</argument>
+        </arguments>
+    </virtualType>
 </config>
