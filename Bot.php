@@ -167,8 +167,16 @@ $data = $_POST ?: $_GET;
 
 $bot = new RequestEnrollingBot();
 
+new CarServiceStepViberAdapter()
+
+new ViberResponce();
+
 $bot->addMessager(
-	new ViberMessager()
+	new ViberMessager(
+		new ViberResponce([
+			CarServiceStepHandler::class = new CarServiceStepViberAdapter()
+		])
+	)
 );
 
 $bot->addHandler(
