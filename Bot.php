@@ -7,9 +7,25 @@ interface ResponceInterface {}
 
 interface BotInterface {}
 
+interface HandlerInterface {}
+
+interface ResponceHandlerAdapterInterface {}
+
+class CarServiceStepHandler implements HandlerInterface
+{
+
+}
+
+class CarServiceStepViberAdapter implements ResponceHandlerAdapterInterface
+{
+
+}
+
 class NobodyCanProccessData extends \Exception {}
 
 class NoRequiredDataForProcessUserMessage extends \Exception {}
+
+class CannotBeFetchedByHandlers extends \Exception {}
 
 class ViberResponce implements ResponceInterface
 {
@@ -24,9 +40,9 @@ class ViberMessager implements MessagerInterface
 
     private $responce = null;
 
-    public function __construct(ResponceInterface $responce)
+    public function __construct(ResponceInterface $responce = null)
     {
-        $this->responce = $responce;
+        $this->responce = $responce ?: new ViberResponce();
     }
 
     public function proccess(array $data)
@@ -70,17 +86,20 @@ class RequestEnrollingBot implements BotInterface
 {
     protected $messagers = [];
 
+	protected $handlers = [];
+
     protected $responce = null;
-
-    protected $command;
-
-    protected $dispatchedMessager = null;
 
     public function addMessager(MessagerInterface $messager)
     {
         $messager->setBot($this);
-        $this->messagers[] = $messager;
+        $this->messagers[$messager::class::MESSAGER_TYPE] = $messager;
     }
+
+	public function addHandler(HandlerInterface $handler)
+	{
+		$this->handlers[] = $handler;
+	}
 
     public function proccess(array $data)
     {
@@ -91,15 +110,15 @@ class RequestEnrollingBot implements BotInterface
                     throw new NoRequiredDataForProcessUserMessage();
                 }
 
+                $this->responce = $messager->getResponce();
+
                 $nextMessage = $this->_processUserMessage(
                     $this->getUserMessage(),
                     $this->getUserIdentifier(),
                     $this->getMessagerType()
                 );
 
-                $messager->setNextMessage($nextMessage);
-
-                $this->responce = $messager->getResponce();
+	            $messager->setNextMessage($nextMessage);
 
                 return $this;
             }
@@ -108,26 +127,53 @@ class RequestEnrollingBot implements BotInterface
         throw new NobodyCanProccessData();
     }
 
+    private function _processUserMessage(
+        string $message,
+		string $userId,
+        string $messagerType
+    ) {
+		//TODO get last message from database;
+		foreach ($this->handlers as $handler) {
+			$lastData = [];
+
+			$data = $handler->fetch($message, $lastData);
+
+			if ($data) {
+				$this->log($lastData['id'], $message, $userId, $messagerType);
+
+				$data['user_id'] = $userId;
+				$data['messager_type'] = $messagerType;
+				$data['handler'] = $handler::class;
+
+				return $this->_saveHandlerData($data);
+			}
+		}
+
+		throw new CannotBeFetchedByHandlers;
+    }
+
+    private function _saveHandlerData($data)
+    {
+    	return $data;
+    }
+
     public function sendResponce()
     {
         return $this->responce->send();
     }
 }
 
-interface BotAdapterInterface
-{
-// адаптирует информацию шага в соответвиии с форматом  ответа бота
-}
-
-class CarServiceStepBotAdapter implements BotAdapterInterface
-{
-
-}
-
 $data = $_POST ?: $_GET;
 
 $bot = new RequestEnrollingBot();
-$bot->addMessager(new ViberMessager(new ViberResponce()));
+
+$bot->addMessager(
+	new ViberMessager()
+);
+
+$bot->addHandler(
+	new CarServiceStepHandler()
+);
 
 $bot->proccess($data)->sendResponce();
 
