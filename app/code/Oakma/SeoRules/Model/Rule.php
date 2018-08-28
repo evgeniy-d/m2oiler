@@ -3,13 +3,14 @@ namespace Oakma\SeoRules\Model;
 
 use \Magento\Framework\Model\AbstractModel;
 use \Magento\Framework\DataObject\IdentityInterface;
+use \Oakma\SeoRules\Api\Data\RuleInterface;
 
 /**
  * Class Rule
  *
  * @package Oakma\SeoRules\Model
  */
-class Rule extends AbstractModel implements IdentityInterface
+class Rule extends AbstractModel implements IdentityInterface, RuleInterface
 {
 	/**
 	 * Seo rule cache tag
@@ -60,5 +61,53 @@ class Rule extends AbstractModel implements IdentityInterface
 		}
 
 		return parent::beforeSave();
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getPageTitle()
+	{
+		return $this->getData(self::PAGE_TITLE);
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getMetaDescription()
+	{
+		return $this->getData(self::META_DESCRIPTION);
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getMetaKeywords()
+	{
+		return $this->getData(self::META_KEYWORDS);
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getSeoH1()
+	{
+		return $this->getData(self::SEO_H1);
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getSeoText()
+	{
+		return $this->getData(self::SEO_TEXT);
+	}
+
+	/**
+	 * @return \Oakma\SeoRules\Model\Rule
+	 */
+	public function getParentRule()
+	{
+		return $this->getData(self::PARENT_RULE_ID);
 	}
 }

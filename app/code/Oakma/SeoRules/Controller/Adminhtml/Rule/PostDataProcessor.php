@@ -8,7 +8,6 @@ use Magento\Framework\Config\Dom\ValidationSchemaException;
 
 /**
  * Class PostDataProcessor
- * @package Magento\Cms\Controller\Adminhtml\Page
  */
 class PostDataProcessor
 {
@@ -40,8 +39,6 @@ class PostDataProcessor
         $this->dateFilter = $dateFilter;
         $this->messageManager = $messageManager;
         $this->validatorFactory = $validatorFactory;
-        $this->validationState = $validationState
-            ?: ObjectManager::getInstance()->get(DomValidationState::class);
     }
 
     /**
@@ -77,7 +74,7 @@ class PostDataProcessor
     public function validateRequireEntry(array $data)
     {
         $requiredFields = [
-            'rule_name' => __('Page Title'),
+            'rule_name' => __('Rule Name'),
         ];
 
         $errorNo = true;

@@ -160,7 +160,7 @@ class InlineEdit extends \Magento\Backend\App\Action
      * @param array $ruleData
      * @return $this
      */
-    public function setCmsPageData(
+    public function setRuleData(
 	    \Oakma\SeoRules\Api\Data\RuleInterface $rule,
 	    array $extendedRuleData,
 	    array $ruleData
