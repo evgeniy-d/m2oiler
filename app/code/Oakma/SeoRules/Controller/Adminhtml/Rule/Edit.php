@@ -92,7 +92,7 @@ class Edit extends \Magento\Backend\App\Action
             $id ? __('Edit Rule') : __('New Rule'),
             $id ? __('Edit Rule') : __('New Rule')
         );
-        $resultPage->getConfig()->getTitle()->prepend(__('Rules'));
+        $resultPage->getConfig()->getTitle()->prepend(__('Seo Rules'));
         $resultPage->getConfig()->getTitle()
             ->prepend($model->getId() ? $model->getRuleName() : __('New Rule'));
 

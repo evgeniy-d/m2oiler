@@ -1,6 +1,6 @@
 <?php
 
-namespace Oakma\Ui\Component;
+namespace Oakma\SeoRules\Ui\Component;
 
 use Oakma\SeoRules\Model\ResourceModel\Rule\CollectionFactory as RuleCollectionFactory;
 use Magento\Framework\App\Request\DataPersistorInterface;
