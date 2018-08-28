@@ -55,6 +55,11 @@ class Rule implements OptionSourceInterface
 	    $data = $this->registry->registry('seorules');
 	    $options = [];
 
+	    $options[] = [
+		    'value' => 0,
+		    'label' => ''
+	    ];
+
 	    foreach ($items->getItems() as $item) {
 	    	if ($data && $data->getId() == $item->getId()) {
 	    		continue;
