@@ -57,7 +57,7 @@ class Rule implements OptionSourceInterface
 
 	    $options[] = [
 		    'value' => 0,
-		    'label' => ''
+		    'label' => '---'
 	    ];
 
 	    foreach ($items->getItems() as $item) {
